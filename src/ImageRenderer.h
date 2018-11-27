@@ -15,15 +15,18 @@ class ImageRenderer :
 {
 public:
    ImageRenderer(GlFuncs* gl_funcs);
+   virtual ~ImageRenderer();
    
    void render() override;
 
    QOpenGLFramebufferObject* 
    createFramebufferObject(const QSize &size) override;
+   void synchronize(QQuickFramebufferObject* fbo) override;
 
 private:
      
    std::vector<std::unique_ptr<Layer>> m_layers;
    GlFuncs* m_gl_funcs;
+   QQuickFramebufferObject* m_fbo;
 };
 

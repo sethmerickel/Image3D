@@ -1,4 +1,4 @@
-#version 410
+#version 410 core
 
 in vec3 vert;
 in vec2 vertTexCoord;
@@ -9,5 +9,5 @@ void main()
 {
    // Pass the tex coord straight through to the fragment shader
    fragTexCoord = vertTexCoord;
-   gl_Position = vec4(vert, 1);
+   gl_Position = vec4(vert, 1.0);
 }

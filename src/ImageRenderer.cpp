@@ -12,7 +12,9 @@
 
 
 ImageRenderer::ImageRenderer(GlFuncs* gl_funcs)
-   :m_gl_funcs(gl_funcs)
+   :m_layers(),
+    m_gl_funcs(gl_funcs),
+    m_fbo(nullptr)
 {
    // Add some stuff to draw 
    ShaderProgram sp{
@@ -30,11 +32,29 @@ ImageRenderer::ImageRenderer(GlFuncs* gl_funcs)
 }
 
 
+ImageRenderer::~ImageRenderer()
+{
+
+}
+
+
 void
 ImageRenderer::render()
 {
-   m_gl_funcs->glClearColor(0.0, 1.0, 1.0, 1.0);
+   m_gl_funcs->glClearColor(0.0, 0.0, 0.001, 1.0);
    m_gl_funcs->glClear(GL_COLOR_BUFFER_BIT);
+   m_gl_funcs->glDepthMask(GL_FALSE);
+   
+   for (auto& layer : m_layers)
+   {
+      layer->draw();
+   }
+
+   if (m_fbo)
+   {
+      std::cout << "reseting state" << std::endl;
+      m_fbo->window()->resetOpenGLState();
+   }
 }
 
 
@@ -45,4 +65,12 @@ ImageRenderer::createFramebufferObject(const QSize &size)
    format.setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
    format.setSamples(4);
    return new QOpenGLFramebufferObject(size, format);
+}
+
+
+void
+ImageRenderer::synchronize(QQuickFramebufferObject* fbo)
+{
+   if (m_fbo == nullptr && fbo != nullptr)
+      m_fbo = fbo;
 }

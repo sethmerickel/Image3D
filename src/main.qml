@@ -7,10 +7,11 @@ Item
    width: 400
    height: 400
 
-   Renderer
+   FboRendererManager 
    {
-      id: renderer
+      id: fbo_renderer_manager
       anchors.fill: parent
       anchors.margins: 10
    }
+
 }

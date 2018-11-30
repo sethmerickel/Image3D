@@ -34,7 +34,7 @@ ImageRenderer::ImageRenderer(GlFuncs* gl_funcs)
 
 ImageRenderer::~ImageRenderer()
 {
-
+   std::cout << "~ImageRenderer()" << std::endl;
 }
 
 

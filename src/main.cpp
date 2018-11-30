@@ -5,7 +5,7 @@
 #include <QtGui/QSurfaceFormat>
 #include <QtQuick/QQuickView>
 
-#include "FboRendererFactory.h"
+#include "FboRendererManager.h"
 
 int main(int argc, char** argv)
 {
@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 
       QGuiApplication app(argc, argv);
 
-      qmlRegisterType<FboRendererFactory>("Image3D", 1, 0, "Renderer");
+      qmlRegisterType<FboRendererManager>("Image3D", 1, 0, "FboRendererManager");
 
       QQuickView view;
       view.setResizeMode(QQuickView::SizeRootObjectToView);

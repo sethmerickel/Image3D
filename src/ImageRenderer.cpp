@@ -6,29 +6,17 @@
 #include <QtQuick/QQuickWindow>
 
 #include "GlFuncs.h"
-#include "LayerImpl.h"
+#include "Layer.h"
 #include "ShaderProgram.h"
 #include "Triangle.h"
 
 
-ImageRenderer::ImageRenderer(GlFuncs* gl_funcs)
-   :m_layers(),
+ImageRenderer::ImageRenderer(GlFuncs* gl_funcs, Layer&& layer)
+   :m_layer(std::move(layer)),
     m_gl_funcs(gl_funcs),
     m_fbo(nullptr)
 {
    // Add some stuff to draw 
-   ShaderProgram sp{
-      m_gl_funcs,
-      "src/Shaders/shader.vs", 
-      "", 
-      "src/Shaders/shader.fs"};
-
-   std::cout << "Here I am" << std::endl;
-
-   Triangle triangle{m_gl_funcs, sp};
-
-   m_layers.emplace_back(
-      new LayerImpl{m_gl_funcs, std::move(sp), std::move(triangle)});
 }
 
 
@@ -45,16 +33,10 @@ ImageRenderer::render()
    m_gl_funcs->glClear(GL_COLOR_BUFFER_BIT);
    m_gl_funcs->glDepthMask(GL_FALSE);
    
-   for (auto& layer : m_layers)
-   {
-      layer->draw();
-   }
+   m_layer.draw();
 
-   if (m_fbo)
-   {
-      std::cout << "reseting state" << std::endl;
-      m_fbo->window()->resetOpenGLState();
-   }
+   assert(m_fbo != nullptr);
+   m_fbo->window()->resetOpenGLState();
 }
 
 

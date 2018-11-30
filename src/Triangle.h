@@ -10,7 +10,15 @@ class ShaderProgram;
 class Triangle 
 {
 public:
-   Triangle(GlFuncs* gl_funcs, const ShaderProgram& sp);
+   Triangle(
+      GlFuncs* gl_funcs,
+      const ShaderProgram& sp,
+      Texture&& texture);
+
+   // Disable copying
+   Triangle(Triangle& tri) = delete;
+   Triangle& operator=(Triangle& rhs) = delete;
+
    Triangle(Triangle&& tri);
    Triangle& operator=(Triangle&& rhs);
 

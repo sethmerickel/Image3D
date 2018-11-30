@@ -156,3 +156,22 @@ ShaderProgram::attrib(const GLchar* name) const
 }
 
 //-----------------------------------------------------------------------------
+
+void 
+ShaderProgram::setUniformMat4(
+   const GLchar* name, 
+   const GLfloat* mat, 
+   bool transpose) const
+{
+   GLint uni_loc = m_gl_funcs->glGetUniformLocation(m_id, name);
+   if (uni_loc == -1)
+   {
+      std::string msg = "Uniform not found: ";
+      msg += name;
+      throw std::runtime_error(msg);
+   }
+
+   m_gl_funcs->glUniformMatrix4fv(uni_loc, 1, transpose, mat);
+}
+
+//-----------------------------------------------------------------------------

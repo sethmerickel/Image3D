@@ -14,4 +14,13 @@ Item
       anchors.margins: 10
    }
 
+   MouseArea
+   {
+      anchors.fill: parent
+      onClicked: 
+      {
+         console.log("Clicked")
+         console.log("x: " + mouse.x + " y: " + mouse.y)
+      }
+   }
 }

@@ -1,19 +1,35 @@
 #pragma once
 
-class ShaderProgram;
+#include <glm/glm.hpp>
+
+#include "Drawable.hpp"
+#include "GlFuncs.h"
+
 
 class Layer
 {
 public:
-   Layer() = default;
-   virtual ~Layer() = 0;
-   virtual void draw() = 0;
-   virtual void reload() = 0;
+   Layer(
+      GlFuncs* gl_funcs,
+      ShaderProgram&& sp, 
+      Drawable&& drawable);
 
+   Layer(Layer&& rhs);
+   Layer& operator=(Layer&& rhs);
+
+   // Not copyable
+   Layer(const Layer&) = delete;
+   Layer& operator=(const Layer&) = delete;
+
+
+   ~Layer(); 
+
+   void draw();
+   void reload();
 
 private:
-   // Not copyable
-   Layer(const Layer& layer) = delete;
-   Layer& operator=(const Layer& layer) = delete;
+   GlFuncs* m_gl_funcs;
+   ShaderProgram m_sp;
+   Drawable m_drawable;
 };
 

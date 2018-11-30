@@ -20,14 +20,11 @@ public:
    
    ~ShaderProgram();
 
-   ShaderProgram(ShaderProgram&& shader_program);
-
+   ShaderProgram(ShaderProgram&& sp);
    ShaderProgram& operator=(ShaderProgram&& sp);
 
    // Non copyable
    ShaderProgram(const ShaderProgram&) = delete;
-
-   // Non copyable
    ShaderProgram& operator=(const ShaderProgram&) = delete;
 
    void use();
@@ -41,6 +38,8 @@ public:
    std::string getFsFname() const { return m_fs_fname; }
 
    GLint attrib(const GLchar* name) const;
+   void setUniformMat4(const GLchar* name, const GLfloat* mat, bool transpose = false) const; 
+
 
 private:
    

@@ -11,13 +11,15 @@
 
 //-----------------------------------------------------------------------------
 
-Triangle::Triangle(GlFuncs* gl_funcs, const ShaderProgram& sp)
+Triangle::Triangle(
+   GlFuncs* gl_funcs,
+   const ShaderProgram& sp,
+   Texture&& texture)
    :m_gl_funcs(gl_funcs),
-    m_texture(gl_funcs, "src/textures/wall.jpg")
-{
+    m_texture(std::move(texture))
+ {
    m_gl_funcs->glGenVertexArrays(1, &m_vao_id);
    m_gl_funcs->glBindVertexArray(m_vao_id);
-
    m_gl_funcs->glGenBuffers(1, &m_vbo_id);
    m_gl_funcs->glBindBuffer(GL_ARRAY_BUFFER, m_vbo_id);
    

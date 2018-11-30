@@ -1,7 +1,6 @@
 #include <QtQuick/QQuickFramebufferObject.h>
 
 #include <memory>
-#include <vector>
 
 #include "GlFuncs.h"
 #include "Layer.h"
@@ -14,7 +13,12 @@ class ImageRenderer :
    public QQuickFramebufferObject::Renderer
 {
 public:
-   ImageRenderer(GlFuncs* gl_funcs);
+   ImageRenderer(GlFuncs* gl_funcs, Layer&& layer);
+
+   // Not copyable
+   ImageRenderer(const ImageRenderer&)  = delete;
+   ImageRenderer& operator=(const ImageRenderer&) = delete;
+
    virtual ~ImageRenderer();
    
    void render() override;
@@ -25,7 +29,7 @@ public:
 
 private:
      
-   std::vector<std::unique_ptr<Layer>> m_layers;
+   Layer m_layer;
    GlFuncs* m_gl_funcs;
    QQuickFramebufferObject* m_fbo;
 };

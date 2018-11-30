@@ -4,6 +4,7 @@
 
 #include <QtQuick/QQuickFramebufferObject.h>
 
+#include "Camera.h"
 
 class ImageRenderer;
 
@@ -17,6 +18,9 @@ public:
    FboRendererManager();
 
    Renderer* createRenderer() const;
+   
+   void resizeWindow(float window_width, float window_height);
+
 
 public slots:
    
@@ -29,5 +33,7 @@ public slots:
    //
 private:
    ImageRenderer* m_renderer;
+   Camera m_camera;
+
 
 };

@@ -11,10 +11,16 @@
 #include "Triangle.h"
 
 
-ImageRenderer::ImageRenderer(GlFuncs* gl_funcs, Layer&& layer)
+ImageRenderer::ImageRenderer(
+   GlFuncs* gl_funcs, 
+   Layer&& layer,
+   const Camera& camera)
    :m_layer(std::move(layer)),
     m_gl_funcs(gl_funcs),
-    m_fbo(nullptr)
+    m_fbo(nullptr),
+    m_camera(camera),
+    m_window_width(-1.0),
+    m_window_height(-1.0)
 {
    // Add some stuff to draw 
 }
@@ -33,7 +39,7 @@ ImageRenderer::render()
    m_gl_funcs->glClear(GL_COLOR_BUFFER_BIT);
    m_gl_funcs->glDepthMask(GL_FALSE);
    
-   m_layer.draw();
+   m_layer.draw(m_camera);
 
    assert(m_fbo != nullptr);
    m_fbo->window()->resetOpenGLState();
@@ -55,4 +61,13 @@ ImageRenderer::synchronize(QQuickFramebufferObject* fbo)
 {
    if (m_fbo == nullptr && fbo != nullptr)
       m_fbo = fbo;
+}
+
+
+void 
+ImageRenderer::setWindowSize(float window_width, float window_height)
+{
+   std::cout << "window width: " << window_width << std::endl;
+   m_window_width = window_width;
+   m_window_height = window_height;
 }

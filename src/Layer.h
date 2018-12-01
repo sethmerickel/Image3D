@@ -5,6 +5,8 @@
 #include "Drawable.hpp"
 #include "GlFuncs.h"
 
+class Camera;
+
 
 class Layer
 {
@@ -25,6 +27,7 @@ public:
    ~Layer(); 
 
    void draw();
+   void draw(const Camera& camera);
    void reload();
 
 private:

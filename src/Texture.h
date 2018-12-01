@@ -24,6 +24,9 @@ public:
    GLuint getId() const;
    void bind();
    void unBind();
+   int getWidth() const;
+   int getHeight() const;
+
 
 private:
    GlFuncs* m_gl_funcs;

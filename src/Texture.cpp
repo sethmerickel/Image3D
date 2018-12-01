@@ -119,4 +119,18 @@ Texture::unBind()
    m_gl_funcs->glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+int 
+Texture::getWidth() const
+{
+   return m_width;
+}
+
+//-----------------------------------------------------------------------------
+
+int
+Texture::getHeight() const
+{
+   return m_height;
+}
+
 //-----------------------------------------------------------------------------

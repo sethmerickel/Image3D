@@ -12,6 +12,23 @@ Item
       id: fbo_renderer_manager
       anchors.fill: parent
       anchors.margins: 10
+      width: parent.width
+      height: parent.height
+
+      Component.onCompleted:
+      {
+         resizeWindow(width, height)
+      }
+
+      onWidthChanged:
+      {
+         resizeWindow(width, height)
+      }
+
+      onHeightChanged:
+      {
+         resizeWindow(width, height)
+      }
    }
 
    MouseArea

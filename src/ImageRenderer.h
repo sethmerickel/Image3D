@@ -2,6 +2,7 @@
 
 #include <memory>
 
+#include "Camera.h"
 #include "GlFuncs.h"
 #include "Layer.h"
 
@@ -13,7 +14,7 @@ class ImageRenderer :
    public QQuickFramebufferObject::Renderer
 {
 public:
-   ImageRenderer(GlFuncs* gl_funcs, Layer&& layer);
+   ImageRenderer(GlFuncs* gl_funcs, Layer&& layer, const Camera& camera);
 
    // Not copyable
    ImageRenderer(const ImageRenderer&)  = delete;
@@ -27,10 +28,16 @@ public:
    createFramebufferObject(const QSize &size) override;
    void synchronize(QQuickFramebufferObject* fbo) override;
 
+   void setWindowSize(float window_width, float window_height);
+
 private:
      
    Layer m_layer;
    GlFuncs* m_gl_funcs;
    QQuickFramebufferObject* m_fbo;
+
+   Camera m_camera;
+   float m_window_width;
+   float m_window_height;
 };
 

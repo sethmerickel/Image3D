@@ -66,5 +66,15 @@ Camera::getTransform() const
    auto topp =  m_view_height/2.0;
    auto bttm = -m_view_height/2.0;
    auto proj = glm::ortho(left, rght, topp, bttm);
+   if (m_window_width < m_window_height)
+   {
+      auto ar = m_window_width / m_window_height;
+      proj[1][1] = ar*proj[1][1];
+   }
+   else
+   {
+      auto ar = m_window_height / m_window_width;
+      proj[0][0] = ar*proj[0][0];
+   }
    return proj;
 }

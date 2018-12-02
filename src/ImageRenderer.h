@@ -6,7 +6,7 @@
 #include "GlFuncs.h"
 #include "Layer.h"
 
-
+class FboRendererManager;
 class QOpenGLFramebufferObject;
 class QSize;
 
@@ -27,17 +27,13 @@ public:
    QOpenGLFramebufferObject* 
    createFramebufferObject(const QSize &size) override;
    void synchronize(QQuickFramebufferObject* fbo) override;
-
    void setWindowSize(float window_width, float window_height);
 
 private:
      
    Layer m_layer;
    GlFuncs* m_gl_funcs;
-   QQuickFramebufferObject* m_fbo;
-
+   FboRendererManager* m_fbo;
    Camera m_camera;
-   float m_window_width;
-   float m_window_height;
 };
 

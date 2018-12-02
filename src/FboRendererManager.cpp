@@ -57,6 +57,22 @@ FboRendererManager::resizeWindow(float window_width, float window_height)
 
 //-----------------------------------------------------------------------------
 
+float 
+FboRendererManager::getWindowWidth() const
+{
+   return m_window_width; 
+}
+
+//-----------------------------------------------------------------------------
+
+float 
+FboRendererManager::getWindowHeight() const
+{
+   return m_window_height;
+}
+
+//-----------------------------------------------------------------------------
+
 //glm::vec3 
 //FboRendererManager::windowToScene(const glm::vec3& w_point) const
 //{

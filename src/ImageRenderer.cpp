@@ -5,6 +5,7 @@
 #include <QtGui/QOpenGLFramebufferObject>
 #include <QtQuick/QQuickWindow>
 
+#include "FboRendererManager.h"
 #include "GlFuncs.h"
 #include "Layer.h"
 #include "ShaderProgram.h"
@@ -18,9 +19,7 @@ ImageRenderer::ImageRenderer(
    :m_layer(std::move(layer)),
     m_gl_funcs(gl_funcs),
     m_fbo(nullptr),
-    m_camera(camera),
-    m_window_width(-1.0),
-    m_window_height(-1.0)
+    m_camera(camera)
 {
    // Add some stuff to draw 
 }
@@ -60,7 +59,16 @@ void
 ImageRenderer::synchronize(QQuickFramebufferObject* fbo)
 {
    if (m_fbo == nullptr && fbo != nullptr)
-      m_fbo = fbo;
+   {
+      auto* my_fbo = dynamic_cast<FboRendererManager*>(fbo);
+      if (my_fbo != nullptr) 
+         m_fbo = my_fbo;
+   }
+
+   if (m_fbo != nullptr)
+   {
+      setWindowSize(m_fbo->getWindowWidth(), m_fbo->getWindowHeight());
+   }
 }
 
 
@@ -68,6 +76,6 @@ void
 ImageRenderer::setWindowSize(float window_width, float window_height)
 {
    std::cout << "window width: " << window_width << std::endl;
-   m_window_width = window_width;
-   m_window_height = window_height;
+   m_camera.setWindowWidth(window_width);
+   m_camera.setWindowHeight(window_height);
 }

@@ -24,6 +24,8 @@ public:
 public slots:
 
    void resizeWindow(float window_width, float window_height);
+   float getWindowWidth() const;
+   float getWindowHeight() const;
    
 private:
 

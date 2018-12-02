@@ -36,7 +36,7 @@ ImageRenderer::render()
 {
    m_gl_funcs->glClearColor(0.0, 0.0, 0.001, 1.0);
    m_gl_funcs->glClear(GL_COLOR_BUFFER_BIT);
-   m_gl_funcs->glDepthMask(GL_FALSE);
+   m_gl_funcs->glDisable(GL_DEPTH_TEST);
    
    m_layer.draw(m_camera);
 

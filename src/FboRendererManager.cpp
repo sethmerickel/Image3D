@@ -14,9 +14,13 @@
 
 FboRendererManager::FboRendererManager()
    :QQuickFramebufferObject(),
+    m_renderer(nullptr),
     m_camera(),
     m_window_width(-1.0f),
-    m_window_height(-1.0f)
+    m_window_height(-1.0f),
+    m_zoom_angle_delta(0.0f),
+    m_zoom_x(0.0f),
+    m_zoom_y(0.0f)
 {
    setMirrorVertically(true);
 }
@@ -49,6 +53,14 @@ FboRendererManager::createRenderer() const
 //-----------------------------------------------------------------------------
 
 void 
+FboRendererManager::setRenderer(ImageRenderer* renderer)
+{
+   m_renderer = renderer;
+}
+
+//-----------------------------------------------------------------------------
+
+void 
 FboRendererManager::resizeWindow(float window_width, float window_height)
 {
    m_window_width = window_width;
@@ -69,6 +81,46 @@ float
 FboRendererManager::getWindowHeight() const
 {
    return m_window_height;
+}
+
+//-----------------------------------------------------------------------------
+
+void 
+FboRendererManager::setZoomAngleDelta(float angle)
+{
+   m_renderer->zoom(angle);
+}
+
+//-----------------------------------------------------------------------------
+
+float 
+FboRendererManager::getZoomAngleDelta() const
+{
+   return m_zoom_angle_delta;
+}
+
+//-----------------------------------------------------------------------------
+
+float
+FboRendererManager::getZoomX() const
+{
+   return m_zoom_x;
+}
+
+//-----------------------------------------------------------------------------
+
+float 
+FboRendererManager::getZoomY() const
+{
+   return m_zoom_y;
+}
+
+//-----------------------------------------------------------------------------
+
+void 
+FboRendererManager::moveCamera(float mouse_x, float mouse_y)
+{
+
 }
 
 //-----------------------------------------------------------------------------

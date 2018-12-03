@@ -34,10 +34,27 @@ Item
    MouseArea
    {
       anchors.fill: parent
-      onClicked: 
+
+      onWheel: 
       {
-         console.log("Clicked")
-         console.log("x: " + mouse.x + " y: " + mouse.y)
+         fbo_renderer_manager.setZoomAngleDelta(wheel.angleDelta.y)
+         //console.log("angleDelta: " + wheel.angleDelta)
+      }
+
+      onPressed:
+      {
+         //console.log("here")
+         //console.log("pressed x:) //" + mouse.x + " y: " mouse.y) 
+      }
+
+      onPositionChanged:
+      {
+         //fbo_rendeerer_manager.moveCamera(mouse.x, mouse.y)
+      }
+
+      onReleased:
+      {
+         
       }
    }
 }

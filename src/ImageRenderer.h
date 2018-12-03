@@ -28,6 +28,7 @@ public:
    createFramebufferObject(const QSize &size) override;
    void synchronize(QQuickFramebufferObject* fbo) override;
    void setWindowSize(float window_width, float window_height);
+   void zoom(float angle_delta);
 
 private:
      

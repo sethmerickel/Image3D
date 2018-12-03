@@ -3,7 +3,7 @@
 in vec4 vert;
 in vec2 vertTexCoord;
 
-out vec2 fragTexCoord;
+smooth out vec2 fragTexCoord;
 
 uniform mat4 proj;
 

@@ -12,7 +12,9 @@ public:
    Camera();
 
    void setPosition(const glm::vec3& position);
-  
+
+   void setZoomFactor(float zoom_factor);
+   float getZoomFactor() const;
    void setWindowWidth(float window_width);
    void setWindowHeight(float window_height);
    void setViewWidth(float view_width);
@@ -23,6 +25,7 @@ public:
 private:
 
    glm::vec3 m_position;
+   float m_zoom_factor; //Number of screen pixels/image pixels
    float m_window_width;
    float m_window_height;
    float m_view_width;

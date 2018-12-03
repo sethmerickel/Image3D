@@ -22,10 +22,20 @@ public:
    Renderer* createRenderer() const;
    
 public slots:
+   
+   void setRenderer(ImageRenderer* renderer);
 
    void resizeWindow(float window_width, float window_height);
    float getWindowWidth() const;
    float getWindowHeight() const;
+
+   void setZoomAngleDelta(float angle);
+   float getZoomAngleDelta() const;
+   float getZoomX() const;
+   float getZoomY() const;
+
+   void moveCamera(float mouse_x, float mouse_y);
+
    
 private:
 
@@ -36,5 +46,7 @@ private:
    Camera m_camera;
    float m_window_width;
    float m_window_height;
-
+   float m_zoom_angle_delta;
+   float m_zoom_x;
+   float m_zoom_y;
 };

@@ -2,7 +2,7 @@
 
 uniform sampler2D tex;
 
-in vec2 fragTexCoord;
+smooth in vec2 fragTexCoord;
 
 out vec4 finalColor;
 

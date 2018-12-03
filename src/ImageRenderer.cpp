@@ -12,6 +12,15 @@
 #include "Triangle.h"
 
 
+namespace
+{
+   float ZOOM_SPEED = 0.01;
+   float ZOOM_MIN = 0.0;
+   float ZOOM_MAX = 100.0;
+};
+
+//------------------------------------------------------------------------------
+
 ImageRenderer::ImageRenderer(
    GlFuncs* gl_funcs, 
    Layer&& layer,
@@ -24,12 +33,14 @@ ImageRenderer::ImageRenderer(
    // Add some stuff to draw 
 }
 
+//------------------------------------------------------------------------------
 
 ImageRenderer::~ImageRenderer()
 {
-   std::cout << "~ImageRenderer()" << std::endl;
+
 }
 
+//------------------------------------------------------------------------------
 
 void
 ImageRenderer::render()
@@ -42,8 +53,10 @@ ImageRenderer::render()
 
    assert(m_fbo != nullptr);
    m_fbo->window()->resetOpenGLState();
+   update();
 }
 
+//------------------------------------------------------------------------------
 
 QOpenGLFramebufferObject* 
 ImageRenderer::createFramebufferObject(const QSize &size) 
@@ -54,28 +67,62 @@ ImageRenderer::createFramebufferObject(const QSize &size)
    return new QOpenGLFramebufferObject(size, format);
 }
 
+//------------------------------------------------------------------------------
 
 void
 ImageRenderer::synchronize(QQuickFramebufferObject* fbo)
 {
+
+   std::puts("CALLING synchronize()");
+
    if (m_fbo == nullptr && fbo != nullptr)
    {
       auto* my_fbo = dynamic_cast<FboRendererManager*>(fbo);
-      if (my_fbo != nullptr) 
+      if (my_fbo != nullptr)
+      {
          m_fbo = my_fbo;
+         m_fbo->setRenderer(this);
+      }
    }
+
 
    if (m_fbo != nullptr)
    {
       setWindowSize(m_fbo->getWindowWidth(), m_fbo->getWindowHeight());
    }
+
+   //   float zoom_angle = m_fbo->getZoomAngleDelta();
+   //   
+   //   if (zoom_angle > 0.0)
+   //   {
+   //      auto zoom_x = m_fbo->getZoomX();
+   //      auto zoom_y = m_fbo->getZoomY();
+   //      auto zoom_delta = zoom_angle * ZOOM_SPEED;
+   //      auto cur_zoom = m_camera.getZoomFactor();
+   //      cur_zoom += zoom_delta;
+   //      m_camera.setZoomFactor(cur_zoom);
+   //      m_fbo->setZoomAngleDelta(0.0);
+   //   }
+   //}
 }
 
+//------------------------------------------------------------------------------
 
 void 
 ImageRenderer::setWindowSize(float window_width, float window_height)
 {
-   std::cout << "window width: " << window_width << std::endl;
    m_camera.setWindowWidth(window_width);
    m_camera.setWindowHeight(window_height);
+}
+
+//------------------------------------------------------------------------------
+
+void 
+ImageRenderer::zoom(float angle_delta)
+{
+   auto zoom_delta = angle_delta * ZOOM_SPEED;
+   auto cur_zoom = m_camera.getZoomFactor();
+   cur_zoom += zoom_delta;
+   if (cur_zoom > ZOOM_MIN && cur_zoom < ZOOM_MAX)
+      m_camera.setZoomFactor(cur_zoom);
 }
